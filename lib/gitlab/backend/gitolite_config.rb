@@ -70,8 +70,9 @@ module Gitlab
       raise Gitolite::AccessDenied, ex.message
 
     rescue Exception => ex
-      log(ex.class.name + " " + ex.message)
-      raise Gitolite::AccessDenied.new("gitolite timeout")
+      str = ex.class.name + " " + ex.message
+      log(str)
+      raise Gitolite::AccessDenied.new("gitolite error: #{str}")
     end
 
     def log message
