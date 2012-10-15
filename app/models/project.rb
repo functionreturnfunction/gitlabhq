@@ -86,22 +86,15 @@ class Project < ActiveRecord::Base
             presence: true,
             length: { within: 0..255 }
 
-  validates :path,
-            uniqueness: true,
-            presence: true,
-            format: { with: /^[a-zA-Z][a-zA-Z0-9_\-\.]*$/,
-                         message: "only letters, digits & '_' '-' '.' allowed. Letter should be first" },
-            length: { within: 0..255 }
+  validates :path, uniqueness: true, presence: true, length: { within: 0..255 },
+            format: { with: /\A[a-zA-Z0-9_\-\.]*\z/,
+                      message: "only letters, digits & '_' '-' '.' allowed." }
 
+  validates :code, presence: true, uniqueness: true, length: { within: 1..255 },
+            format: { with: /\A[a-zA-Z0-9_\-\.]*\z/,
+                      message: "only letters, digits & '_' '-' '.' allowed." }
   validates :description,
             length: { within: 0..2000 }
-
-  validates :code,
-            presence: true,
-            uniqueness: true,
-            format: { with: /^[a-zA-Z][a-zA-Z0-9_\-\.]*$/,
-                         message: "only letters, digits & '_' '-' '.' allowed. Letter should be first"  },
-            length: { within: 1..255 }
 
   validates :owner, presence: true
   validates :issues_enabled, :wall_enabled, :merge_requests_enabled,
